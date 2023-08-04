@@ -1,5 +1,5 @@
 .vs*
 /RayTracerChallenge/bin*
-/RayTracerChallenge/obj*
+/RayTracerChallenge/obj
 /Tests/bin*
 /Tests/obj*
