@@ -1,9 +1,11 @@
-using System.Drawing;
+using RayTracerChallenge.Objects;
 using Tuple = RayTracerChallenge.Objects.Tuple;
+using Vector = RayTracerChallenge.Objects.Vector;
 
 namespace Tests
 {
-    public class Tests
+    [TestFixture]
+    public class TupleTests
     {
         const double EPSILON = 0.0001;
 
@@ -22,68 +24,208 @@ namespace Tests
         [Test]
         public void PointCreatesTupleWhereWIs1()
         {
-            var point = Tuple.Point(1.0, 1.0, 1.0);
-            Assert.True(isEqual(point.W, 1.0));
+            var point = new Point(1, 1, 1);
+            Assert.True(isEqual(point.W, 1));
         }
 
         [Test]
-        public void VectorCreatesTupleWhereWIs1()
+        public void VectorCreatesTupleWhereWIs0()
         {
-            var vector = Tuple.Vector(1.0, 1.0, 1.0);
+            var vector = new Vector(1.0, 1.0, 1.0);
             Assert.True(isEqual(vector.W, 0.0));
         }
 
         [Test]
-        public void AddingTuplesWorksCorrectly()
+        public void AddingVectorToPointCreatesPoint()
         {
-            var a = new Tuple(3, -2, 5, 1);
-            var b = new Tuple(-2, 3, 1, 0);
+            var a = new Point(3, -2, 5);
+            var b = new Vector(-2, 3, 1);
             var result = a + b;
 
-            var expected = new Tuple(1, 1, 6, 1);
+            var expected = new Point(1, 1, 6);
             Assert.True(result == expected);
         }
 
         [Test]
-        public void SubtractingPointsProducesCorrectVector()
+        public void AddingTwoVectorsCreatesVector()
         {
-            var p1 = Tuple.Point(3, 2, 1);
-            var p2 = Tuple.Point(5, 6, 7);
+            var a = new Vector(3, -2, 5);
+            var b = new Vector(-2, 3, 1);
+            var result = a + b;
+
+            var expected = new Vector(1, 1, 6);
+            Assert.True(result == expected);
+        }
+
+        [Test]
+        public void SubtractingTwoPointsProducesVector()
+        {
+            var p1 = new Point(3, 2, 1);
+            var p2 = new Point(5, 6, 7);
             var result = p1 - p2;
 
-            var expected = new Tuple(-2, -4, -6, 0);
+            var expected = new Vector(-2, -4, -6);
             Assert.True(result == expected);
         }
 
         [Test]
-        public void SubtractingVectorFromPointProducesCorrectPoint()
+        public void SubtractingVectorFromPointProducesPoint()
         {
-            var p = Tuple.Point(3, 2, 1);
-            var v = Tuple.Vector(5, 6, 7);
+            var p = new Point(3, 2, 1);
+            var v = new Vector(5, 6, 7);
             var result = p - v;
 
-            var expected = new Tuple(-2, -4, -6, 1);
+            var expected = new Point(-2, -4, -6);
             Assert.True(result == expected);
         }
 
         [Test]
         public void SubtractingVectorsProducesVector()
         {
-            var v1 = Tuple.Vector(3, 2, 1);
-            var v2 = Tuple.Vector(5, 6, 7);
+            var v1 = new Vector(3, 2, 1);
+            var v2 = new Vector(5, 6, 7);
             var result = v1 - v2;
 
-            var expected = new Tuple(-2, -4, -6, 0);
+            var expected = new Vector(-2, -4, -6, 0);
             Assert.True(result == expected);
         }
 
         [Test]
         public void NegatingVectorReturnsNegatedVector()
         {
-            var v = Tuple.Vector(1, -2, 3);
+            var v = new Vector(1, -2, 3);
             var result = -v;
 
-            var expected = new Tuple(-1, 2, -3, 0);
+            var expected = new Vector(-1, 2, -3);
+            Assert.True(result == expected);
+        }
+
+        [Test]
+        public void MultiplyingTupleVectorByScalarReturnsVector()
+        {
+            var t = new Vector(1, -2, 3, -4);
+            var result = t * 3.5;
+
+            var expected = new Vector(3.5, -7, 10.5, -14);
+            Assert.True(result == expected);
+        }
+
+        [Test]
+        public void MultiplyingTupleByFractionReturnsCorrectValue()
+        {
+            var t = new Vector(1, -2, 3, -4);
+            var result = t * 0.5;
+
+            var expected = new Vector(0.5, -1, 1.5, -2);
+            Assert.True(result == expected);
+        }
+
+        [Test]
+        public void DividingVectorByScalarReturnsCorrectValue()
+        {
+            var t = new Vector(1, -2, 3, -4);
+            var result = t / 2;
+
+            var expected = new Vector(0.5, -1, 1.5, -2);
+            Assert.True(result == expected);
+        }
+
+        [Test]
+        public void VectorXOnlyMagnitudeCalculatedCorrectly()
+        {
+            var v = new Vector(1, 0, 0);
+            Assert.IsTrue(isEqual(v.Magnitude, 1));
+        }
+
+        [Test]
+        public void VectorYOnlyMagnitudeCalculatedCorrectly()
+        {
+            var v = new Vector(0, 1, 0);
+            Assert.IsTrue(isEqual(v.Magnitude, 1));
+        }
+
+        [Test]
+        public void VectorZOnlyMagnitudeCalculatedCorrectly()
+        {
+            var v = new Vector(0, 0, 1);
+            Assert.IsTrue(isEqual(v.Magnitude, 1));
+        }
+
+        [Test]
+        public void VectorMagnitudeCalculatedCorrectly()
+        {
+            var v = new Vector(1, 2, 3);
+            Assert.IsTrue(isEqual(v.Magnitude, Math.Sqrt(14)));
+        }
+
+        [Test]
+        public void NegativeVectorMagnitudeCalculatedCorrectly()
+        {
+            var v = new Vector(-1, -2, -3);
+            Assert.IsTrue(isEqual(v.Magnitude, Math.Sqrt(14)));
+        }
+
+        [Test]
+        public void XOnlyVectorNormalizedCorrectly()
+        {
+            var v = new Vector(4, 0, 0);
+            var result = v.Normalize();
+
+            var expected = new Vector(1, 0, 0);
+            Assert.True(result == expected);
+        }
+
+        [Test]
+        public void VectorNormalizedCorrectly()
+        {
+            var v = new Vector(1, 2, 3);
+            var sqrtOf14 = Math.Sqrt(14);
+            var result = v.Normalize();
+
+            var expected = new Vector(1/sqrtOf14, 2/sqrtOf14, 3/sqrtOf14);
+            Assert.True(result == expected);
+        }
+
+        [Test]
+        public void NormalizedVectorHasMagnitude1()
+        {
+            var v = new Vector(1, 2, 3);
+            var result = v.Normalize();
+
+            Assert.True(isEqual(result.Magnitude, 1));
+        }
+
+        [Test]
+        public void VectorDotProductCalculatedCorrectly()
+        {
+            var v1 = new Vector(1, 2, 3);
+            var v2 = new Vector(2, 3, 4);
+            var result = Vector.Dot(v1, v2);
+
+            var expected = 20;
+            Assert.True(isEqual(result, expected));
+        }
+
+        [Test]
+        public void VectorCrossProductCalculatedCorrectly()
+        {
+            var v1 = new Vector(1, 2, 3);
+            var v2 = new Vector(2, 3, 4);
+            var result = Vector.Cross(v1, v2);
+
+            var expected = new Vector(-1, 2, -1);
+            Assert.True(result == expected);
+        }
+
+        [Test]
+        public void VectorCrossProductChangingOrderNegatesResult()
+        {
+            var v1 = new Vector(1, 2, 3);
+            var v2 = new Vector(2, 3, 4);
+            var result = Vector.Cross(v2, v1);
+
+            var expected = new Vector(-1, 2, -1);
+            expected = (Vector)(-expected);
             Assert.True(result == expected);
         }
     }
