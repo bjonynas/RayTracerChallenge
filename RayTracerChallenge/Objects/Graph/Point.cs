@@ -7,11 +7,19 @@
 
         }
 
-        public Point (double x, double y, double z)
+        public Point (double x, double y, double z = 0)
         {
             X = x;
             Y = y;
             Z = z;
+            W = 1.0;
+        }
+
+        public Point(Tuple tuple)
+        {
+            X = tuple.X;
+            Y = tuple.Y;
+            Z = tuple.Z;
             W = 1.0;
         }
 
