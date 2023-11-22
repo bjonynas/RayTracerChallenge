@@ -8,11 +8,12 @@ namespace RayTracerChallenge.Helpers
         private const int COLOURMAX = 255;
         private const int MAXLINELENGTH = 70;
 
-        public string CanvasToPPM(Canvas canvas)
+        public List<string> CanvasToPPM(Canvas canvas)
         {
-            var result = $"{IDENTIFIER}\n";
-            result = result + $"{canvas.Width} {canvas.Height}\n";
-            result = result + $"{COLOURMAX}\n";
+            var result = new List<string>();
+            result.Add($"{IDENTIFIER}\n");
+            result.Add($"{canvas.Width} {canvas.Height}\n");
+            result.Add($"{COLOURMAX}\n");
 
             for(int row = 0; row < canvas.Height; row++)
             {
@@ -39,7 +40,7 @@ namespace RayTracerChallenge.Helpers
                             else
                             {
                                 line = line.Remove(line.Length - 1, 1);
-                                result = result + line + "\n";
+                                result.Add(line + "\n");
                                 line = "";
                                 for(int c = 0; c < colourValues.Length; c++)
                                 {
@@ -52,7 +53,8 @@ namespace RayTracerChallenge.Helpers
                     
                 }
                 line = line.Remove(line.Length - 1, 1) + "\n";
-                result = result + line;
+                result.Add(line);
+                Console.WriteLine($"Helper processed {row} rows");
             }
 
             return result;
