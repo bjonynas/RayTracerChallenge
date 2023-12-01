@@ -30,30 +30,6 @@
 
         #region OperatorOverrides
 
-        public static bool operator ==(Point a, Point b)
-        {
-            if (a.X == b.X && a.Y == b.Y && a.Z == b.Z && a.W == b.W)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public static bool operator !=(Point a, Point b)
-        {
-            if (a.X != b.X || a.Y != b.Y || a.Z != b.Z || a.W != b.W)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
         public static Point operator +(Point a, Vector b)
         {
             return new Point()

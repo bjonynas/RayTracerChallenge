@@ -13,11 +13,10 @@ namespace Tests
             var helper = new PPMHelper();
             var canvas = new Canvas(5, 3);
 
-            string image = helper.CanvasToPPM(canvas);
-            var lines = image.Split("\n");
-            Assert.True(lines[0].Equals("P3"));
-            Assert.True(lines[1].Equals("5 3"));
-            Assert.True(lines[2].Equals("255"));
+            string[] image = helper.CanvasToPPM(canvas).ToArray();
+            Assert.True(image[0].Equals("P3\n"));
+            Assert.True(image[1].Equals("5 3\n"));
+            Assert.True(image[2].Equals("255\n"));
         }
 
         [Test]
@@ -33,16 +32,15 @@ namespace Tests
             canvas.WritePixel(new Point(2, 1), c2);
             canvas.WritePixel(new Point(4, 2), c3);
 
-            string image = helper.CanvasToPPM(canvas);
-            var lines = image.Split("\n");
+            string[] image = helper.CanvasToPPM(canvas).ToArray();
 
-            var l3 = "255 0 0 0 0 0 0 0 0 0 0 0 0 0 0";
-            var l4 = "0 0 0 0 0 0 0 128 0 0 0 0 0 0 0";
-            var l5 = "0 0 0 0 0 0 0 0 0 0 0 0 0 0 255";
+            var l3 = "255 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n";
+            var l4 = "0 0 0 0 0 0 0 128 0 0 0 0 0 0 0\n";
+            var l5 = "0 0 0 0 0 0 0 0 0 0 0 0 0 0 255\n";
 
-            Assert.IsTrue(lines[3].Equals(l3));
-            Assert.IsTrue(lines[4].Equals(l4));
-            Assert.IsTrue(lines[5].Equals(l5));
+            Assert.IsTrue(image[3].Equals(l3));
+            Assert.IsTrue(image[4].Equals(l4));
+            Assert.IsTrue(image[5].Equals(l5));
         }
 
         [Test]
@@ -52,18 +50,17 @@ namespace Tests
             var colour = new Colour(1, 0.8, 0.6);
             var canvas = new Canvas(10, 2, colour);
 
-            string image = helper.CanvasToPPM(canvas);
-            var lines = image.Split("\n");
+            string[] image = helper.CanvasToPPM(canvas).ToArray();
 
-            var l3 = "255 204 153 255 204 153 255 204 153 255 204 153 255 204 153 255 204";
-            var l4 = "153 255 204 153 255 204 153 255 204 153 255 204 153";
-            var l5 = "255 204 153 255 204 153 255 204 153 255 204 153 255 204 153 255 204";
-            var l6 = "153 255 204 153 255 204 153 255 204 153 255 204 153";
+            var l3 = "255 204 153 255 204 153 255 204 153 255 204 153 255 204 153 255 204\n";
+            var l4 = "153 255 204 153 255 204 153 255 204 153 255 204 153\n";
+            var l5 = "255 204 153 255 204 153 255 204 153 255 204 153 255 204 153 255 204\n";
+            var l6 = "153 255 204 153 255 204 153 255 204 153 255 204 153\n";
 
-            Assert.IsTrue(lines[3].Equals(l3));
-            Assert.IsTrue(lines[4].Equals(l4));
-            Assert.IsTrue(lines[5].Equals(l5));
-            Assert.IsTrue(lines[6].Equals(l6));
+            Assert.IsTrue(image[3].Equals(l3));
+            Assert.IsTrue(image[4].Equals(l4));
+            Assert.IsTrue(image[5].Equals(l5));
+            Assert.IsTrue(image[6].Equals(l6));
         }
 
         [Test]
@@ -71,9 +68,9 @@ namespace Tests
         {
             var helper = new PPMHelper();
             var canvas = new Canvas(5, 3);
-            string image = helper.CanvasToPPM(canvas);
+            string[] image = helper.CanvasToPPM(canvas).ToArray();
 
-            Assert.IsTrue(image.EndsWith("\n"));
+            Assert.IsTrue(image[image.Length -1].EndsWith("\n"));
         }
     }
 }

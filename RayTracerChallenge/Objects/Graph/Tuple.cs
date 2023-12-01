@@ -16,5 +16,34 @@
             Z = z;
             W = w;
         }
+
+        public double[] ToArray()
+        {
+            return new double[] { X, Y, Z, W };
+        }
+
+        public static bool operator ==(Tuple a, Tuple b)
+        {
+            if (a.X == b.X && a.Y == b.Y && a.Z == b.Z && a.W == b.W)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public static bool operator !=(Tuple a, Tuple b)
+        {
+            if (a.X != b.X || a.Y != b.Y || a.Z != b.Z || a.W != b.W)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

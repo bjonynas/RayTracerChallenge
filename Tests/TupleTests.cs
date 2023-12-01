@@ -22,6 +22,47 @@ namespace Tests
         }
 
         [Test]
+        public void ComparingEqualVectorsReturnsCorrectValue()
+        {
+            var v1 = new Vector(1, 2, 3);
+            var v2 = new Vector(1, 2, 3);
+
+            Assert.IsTrue(v1 == v2);
+            Assert.IsFalse(v1 != v2);
+        }
+
+        [Test]
+        public void ComparingDifferentVectorsReturnsCorrectValue()
+        {
+            var v1 = new Vector(1, 2, 3);
+            var v2 = new Vector(4, 5, 6);
+
+            Assert.IsTrue(v1 != v2);
+            Assert.IsFalse(v1 == v2);
+        }
+
+
+        [Test]
+        public void ComparingEqualPointsReturnsCorrectValue()
+        {
+            var p1 = new Point(1, 2, 3);
+            var p2 = new Point(1, 2, 3);
+
+            Assert.IsTrue(p1 == p2);
+            Assert.IsFalse(p1 != p2);
+        }
+
+        [Test]
+        public void ComparingDifferentPointsReturnsCorrectValue()
+        {
+            var p1 = new Point(1, 2, 3);
+            var p2 = new Point(4, 5, 6);
+
+            Assert.IsTrue(p1 != p2);
+            Assert.IsFalse(p1 == p2);
+        }
+
+        [Test]
         public void PointCreatesTupleWhereWIs1()
         {
             var point = new Point(1, 1, 1);

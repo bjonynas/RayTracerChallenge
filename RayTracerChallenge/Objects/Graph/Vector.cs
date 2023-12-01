@@ -59,30 +59,6 @@
 
         #region OperatorOverrides
 
-        public static bool operator ==(Vector a, Vector b)
-        {
-            if (a.X == b.X && a.Y == b.Y && a.Z == b.Z && a.W == b.W)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        
-        public static bool operator !=(Vector a, Vector b)
-        {
-            if (a.X != b.X || a.Y != b.Y || a.Z != b.Z || a.W != b.W)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
         public static Vector operator +(Vector a, Vector b)
         {
             return new Vector()
